@@ -1,18 +1,17 @@
 <html>
 
 <head>
-    <link
-        href="https://fonts.googleapis.com/css?family=Noto+Sans&amp;subset=cyrillic,cyrillic-ext,devanagari,greek,greek-ext,latin-ext,vietnamese"
-        rel="stylesheet">
+    <meta charset="utf8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
-    <script src="class.js"></script>
-    <script src="script.js"></script>
     <style>
         canvas {
             display: block;
             margin: 0 auto;
+        }
+
+        div {
+            display: inline-block;
         }
 
         h1 {
@@ -24,52 +23,65 @@
             font-family: 'Noto Sans', sans-serif !important;
         }
     </style>
+    </style>
 </head>
 
 <body>
     <table class="table table-hover">
         <thead>
             <tr>
-                <h1>Ծրագրավորում II Ստեփանակերտ</h1>
+                <h1>Ծրագրավորում III Երևան</h1>
             </tr>
             <tr>
-                <h1>Էրիկ Ասրյան</h1>
+                <h1>Անուն Ազգանուն</h1>
             </tr>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Գույն</th>
                 <th scope="col">Նկարագրություն</th>
+                <th scope="col">Ծնվել է</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <th scope="row">1</th>
                 <td scope="row" style="background-color:green;"></td>
-                <td>Կանաչը խոտն է, աճում է 8 ուղություններով: Այն սկսում է բազմանալ ութ ցիկլը մեկ: </td>
+                <td>Կանաչը խոտն է, որը բազմանում է N ցիկլը մեկ,մահանում է երբ նրան ուտում է խոտակերը, կամ այրում է
+                    կրակը, կամ նրան կոխկրտում է գիշատիչը</td>
+                <td id="grassCount"></td>
             </tr>
             <tr>
                 <th scope="row">2</th>
                 <td scope="row" style="background-color:orange;"></td>
-                <td>Գազարագույնը խոտակերն է, որը ուտում է խոտին:Ունենալով 35 կյանք նա կարողանում է շարժվել, եթե կյանքերը փոքր են  35-ից իր կյանքերը ավելացնում է խոտերի հաշվին ուտելով դրանք և բազմանում եթե կյանքերը մեծ է 15-ից, եթե 35  քայլից հետո խոտ չի ուտում մահանում է:Կարողանում է շարժվել միայն ազատ վանդակներով: </td>
+                <td>Դեղինը խոտակերն է, որը բազմանում է N հատ խոտ ուտելուց հետո և մահանում է N հատ չուտելուց հետո, կամ
+                    երբ նրան ուտում է գիշատիչը, կամ երբ նրան այրում է կրակը:</td>
+                <td id="grassEaterCount"></td>
             </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td scope="row" style="background-color:red;"></td>
-                <td>Կարմիրը գիշատիչն է, նա նույնպես խոտակերի նման կարողանում է շարժվել ուտել բազմանալ: Կյանքերը 70-են, ուտում է խոտակերին մահանում է 70 քայլից հետո:Կարողանում է շարժվել խոտով և ազատ վանդակներով:
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">4</th>
-                <td scope="row" style="background-color:#3977ff;"></td>
-                <td>Կապույտը ջուրն է որը տարածվում է ամբողջ քարտեզով: Տեսնելով 8 վանդակ ընտրում է մեկը և տարածվում: Վոչնչացնում է իր մեջ ընկած խոտակերին և գիշատիչին:</td>
-            </tr>
-            <tr>
-                <th scope="row">5</th>
-                <td scope="row" style="background-color:#145252;"></td>
-                <td>Իսկ մուգ կապույտը ձուկ է:Չի բազմանում, չի մահանում շարժվում է միայն ջրում:</td>
-            </tr>
+            <th scope="row">3</th>
+            <td scope="row" style="background-color:red;"></td>
+            <td>Կարմիրը գիշատիչն է, նա նույնպես խոտակերի նման կարողանում է շարժվել ուտել բազմանալ: Կյանքերը 70-են, ուտում է խոտակերին մահանում է 70 քայլից հետո:Կարողանում է շարժվել խոտով և ազատ վանդակներով:
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">4</th>
+            <td scope="row" style="background-color:#3977ff;"></td>
+            <td>Կապույտը ջուրն է որը տարածվում է ամբողջ քարտեզով: Տեսնելով 8 վանդակ ընտրում է մեկը և տարածվում: Վոչնչացնում է իր մեջ ընկած խոտակերին և գիշատիչին:</td>
+        </tr>
+        <tr>
+            <th scope="row">5</th>
+            <td scope="row" style="background-color:#145252;"></td>
+            <td>Իսկ մուգ կապույտը ձուկ է:Չի բազմանում, չի մահանում շարժվում է միայն ջրում:</td>
+        </tr>
+    </tbody>
+</table>
+</body>
+
+</html>
         </tbody>
     </table>
+    <script src="p5.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
