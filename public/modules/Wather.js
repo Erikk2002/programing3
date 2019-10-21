@@ -1,14 +1,13 @@
-var LiveForm = require("../../91919/modules/LiveForm");
-var random = require("../../91919/modules/random");
-
+var LiveForm = require("./LiveForm");
+var random = require("./random.js");
 
 module.exports = class Wather extends LiveForm {
     constructor(x, y) {
         super(x, y);
         this.multiply = 0;
-        this.directions = [];
-    }
-    newDirections() {
+    }   
+       
+    getNewCoordinates() {
         this.directions = [
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
@@ -21,18 +20,8 @@ module.exports = class Wather extends LiveForm {
         ];
     }
     chooseCell(character) {
-        this.newDirections()
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        this.getNewCoordinates();
+        return super.chooseCell(character);
     }
     mul() {
         this.multiply++;
@@ -45,10 +34,9 @@ module.exports = class Wather extends LiveForm {
             let y = newCell[1];
 
             matrix[y][x] = 4;
-console.log("10");
 
-            let water = new Water(x, y);
-            waterArr.push(water);
+            let wather = new Wather(x, y);
+            watherArr.push(wather);
 
             this.multiply = 0;
         }

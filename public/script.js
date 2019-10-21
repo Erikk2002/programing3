@@ -10,7 +10,7 @@ function setup() {
 
     //! Getting DOM objects (HTML elements)
     let grassCountElement = document.getElementById('grassCount');
-    let grassEaterCountElement = document.getElementById('grassEaterCount');
+    let weatherElement = document.getElementById('weather');
 
     //! adding socket listener on "data" <-- name, after that fire 'drawCreatures' function 
 
@@ -20,8 +20,9 @@ function setup() {
         //! after getting data pass it to matrix variable
         matrix = data.matrix;
         grassCountElement.innerText = data.grassCounter;
+        weatherElement.innerText = data.weather;
      
-        createCanvas(matrix[0].length * side, matrix.length * side)
+        createCanvas(matrix[0].length * side, matrix.length * side);
         //! clearing background by setting it to new grey color
         background('#acacac');
         //! Draw grassCount and grassEaterCount to HTML (use DOM objects to update information, yes, and use .innerText <- function)
@@ -30,9 +31,21 @@ function setup() {
         for (var i = 0; i < matrix.length; i++) {
             for (var j = 0; j < matrix[i].length; j++) {
                 if (matrix[i][j] == 1) {
-                    fill("green");
+                    if (data.weather == "summer"){
+                        fill("green");
+                    }
+                    else if (data.weather == "autumn"){
+                        fill ("orange");
+                    }
+                    else if (data.weather == "winter"){
+                        fill ("rgb(204, 255, 255)");
+                    }
+                    else if (data.weather == "spring"){
+                        fill("rgb(123, 163, 107)");
+                    }
                     rect(j * side, i * side, side, side);
-                } else if (matrix[i][j] == 2) {
+                }
+                 else if (matrix[i][j] == 2) {
                     fill("orange");
                     rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 0) {
