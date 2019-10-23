@@ -105,6 +105,11 @@ function creatingObjects() {
                 watherArr.push(wather);
                watherHashiv++;
             }
+            else if (matrix[y][x] == 6) {
+                let mard = new Mard(x, y);
+                mardArr.push(mard);
+               mardHashiv++;
+            }
         }
     }
 }
