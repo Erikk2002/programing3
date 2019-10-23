@@ -34,7 +34,7 @@ module.exports = class Fish extends LiveForm {
         return found;
     }
     move() {
-
+       fishHashiv++
         let emptyCells = this.chooseCell(4);
         let newCell = random(emptyCells);
 

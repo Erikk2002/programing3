@@ -5,6 +5,7 @@ var GrassEater = require("./modules/GrassEater.js");
 var Predator = require("./modules/Predator.js");
 var Fish = require("./modules/Fish.js");
 let Wather = require("./modules/Wather.js");
+let Mard = require("./modules/Mard.js");
 let random = require('./modules/random');
 //! Requiring modules  --  END
 
@@ -15,19 +16,21 @@ grassEaterArr = [];
 predatorArr = [];
 watherArr = [];
 fishArr = [];
+mardArr = [];
 matrix = [];
 
 //! Setting global arrays  -- END
 grassHashiv = 0;
-eatHashiv = 0;
+grassEaterHashiv = 0;
 huntHashiv = 0;
 waterHashiv = 0;
 predatorHashiv = 0;
+fishHashiv = 0;
+mardHashiv = 0;
 watherHashiv = 0;
 
-
 //! Creating MATRIX -- START
-function matrixGenerator(matrixSize, grass, grassEater, predator, wather, fish) {
+function matrixGenerator(matrixSize, grass, grassEater, predator, wather, fish, mard ) {
     for (let i = 0; i < matrixSize; i++) {
         matrix[i] = [];
         for (let o = 0; o < matrixSize; o++) {
@@ -59,8 +62,14 @@ function matrixGenerator(matrixSize, grass, grassEater, predator, wather, fish) 
         let customY = Math.floor(random(matrixSize));
         matrix[customY][customX] = 5;
     }
+    for (let i = 0; i < mard; i++) {
+        let customX = Math.floor(random(matrixSize));
+        let customY = Math.floor(random(matrixSize));
+        matrix[customY][customX] = 6;
+    }
+  
 }
-matrixGenerator(40, 50, 5, 3, 1);
+matrixGenerator(40, 50, 5, 3, 1, 0, 1 );
 //! Creating MATRIX -- END
 
 
@@ -108,7 +117,7 @@ function creatingObjects() {
             else if (matrix[y][x] == 6) {
                 let mard = new Mard(x, y);
                 mardArr.push(mard);
-               mardHashiv++;
+                mardHashiv++;
             }
         }
     }
@@ -129,7 +138,7 @@ function game() {
     else if (exanak <= 30){
         weather = "autumn";
     }
-    else if (exanak <= 40){
+    else if (exanak <= 50){
         weather = "winther";
     }
     else if (exanak = 50){
@@ -146,6 +155,11 @@ function game() {
     if (grassEaterArr[0] !== undefined) {
         for (var i in grassEaterArr) {
             grassEaterArr[i].eat();
+        }
+    }
+    if (mardArr[0] !== undefined) {
+        for (var i in mardArr) {
+            mardArr[i].eat();
         }
     }
     if (predatorArr[0] !== undefined) {
@@ -178,6 +192,7 @@ function game() {
         for (var i in fishArr) {
             fishArr[i].move();
         }
+        
     }
 
 
@@ -185,7 +200,18 @@ function game() {
     let sendData = {
         matrix: matrix,
         grassCounter: grassHashiv,
-        weather: weather
+        grassLiveCounter: grassArr.length,
+        grassEaterCounter: grassEaterHashiv,
+        grassEaterLiveCounter: grassEaterArr.length,
+        predatorCounter: predatorHashiv,
+        predatorLiveCounter: predatorArr.length,
+        watherCounter: watherHashiv,
+        watherLiveCounter: watherArr.length,
+        fishCounter: fishHashiv,
+        fishLiveCounter: fishArr.length,
+        mardCounter: mardHashiv,
+        mardLiveCounter: mardArr.length,
+        weather: weather,
     }
 
     //! Send data over the socket to clients who listens "data"

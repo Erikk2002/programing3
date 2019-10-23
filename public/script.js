@@ -4,12 +4,24 @@ function setup() {
 
     var socket = io();
 
-    var side = 30;
+    var side = 10;
 
     var matrix = [];
 
     //! Getting DOM objects (HTML elements)
     let grassCountElement = document.getElementById('grassCount');
+    let grassLiveCountElement = document.getElementById('grassLiveCount');
+    let grassEaterCountElement = document.getElementById('grassEaterCount');
+    let grassEaterLiveCountElement = document.getElementById('grassEaterLiveCount');
+    let predatorCountElement = document.getElementById('predatorCount');
+    let predatorLiveCountElement = document.getElementById('predatorLiveCount');
+    let watherCountElement = document.getElementById('watherCount');
+    let watherLiveCountElement = document.getElementById('watherLiveCount');
+    let fishCountElement = document.getElementById('fishCount');
+    let fishLiveCountElement = document.getElementById('fishLiveCount');
+    let mardCountElement = document.getElementById('mardCount');
+    let mardLiveCountElement = document.getElementById('mardLiveCount');
+
     let weatherElement = document.getElementById('weather');
 
     //! adding socket listener on "data" <-- name, after that fire 'drawCreatures' function 
@@ -20,6 +32,17 @@ function setup() {
         //! after getting data pass it to matrix variable
         matrix = data.matrix;
         grassCountElement.innerText = data.grassCounter;
+        grassLiveCountElement.innerText = data.grassLiveCounter;
+        grassEaterCountElement.innerText = data.grassEaterCounter;
+        grassEaterLiveCountElement.innerText = data.grassEaterLiveCounter;
+        predatorCountElement.innerText = data.predatorCounter;
+        predatorLiveCountElement.innerText = data.predatorLiveCounter;
+        watherCountElement.innerText = data.watherCounter;
+        watherLiveCountElement.innerText = data.watherLiveCounter;
+        fishCountElement.innerText = data.fishCounter;
+        fishLiveCountElement.innerText = data.fishLiveCounter;
+        mardCountElement.innerText = data.mardCounter;
+        mardLiveCountElement.innerText = data.mardLiveCounter;
         weatherElement.innerText = data.weather;
      
         createCanvas(matrix[0].length * side, matrix.length * side);
@@ -37,7 +60,7 @@ function setup() {
                     else if (data.weather == "autumn"){
                         fill ("orange");
                     }
-                    else if (data.weather == "winter"){
+                    else if (data.weather == "winther"){
                         fill ("rgb(204, 255, 255)");
                     }
                     else if (data.weather == "spring"){
@@ -46,7 +69,7 @@ function setup() {
                     rect(j * side, i * side, side, side);
                 }
                  else if (matrix[i][j] == 2) {
-                    fill("orange");
+                    fill("pink");
                     rect(j * side, i * side, side, side);
                 } else if (matrix[i][j] == 0) {
                     fill('#acacac');
@@ -60,6 +83,12 @@ function setup() {
                 } else if (matrix[i][j] == 5) {
                     fill('yellow');
                     rect(j * side, i * side, side, side);
+              
+                }
+                else if (matrix[i][j] == 6) {
+                    fill('black');
+                    rect(j * side, i * side, side, side);
+              
                 }
             }
         }

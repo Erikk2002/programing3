@@ -24,6 +24,7 @@ module.exports = class Wather extends LiveForm {
         return super.chooseCell(character);
     }
     mul() {
+        watherHashiv++
         this.multiply++;
         let emptyCells = this.chooseCell(0);
         let newCell = random(emptyCells);

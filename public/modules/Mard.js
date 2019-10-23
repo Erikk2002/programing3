@@ -1,8 +1,8 @@
 var LiveForm = require("./LiveForm");
-var random = require("../../91919/modules/random");
+var random = require("./random");
 
 
-module.exports = class Predator extends LiveForm {
+module.exports = class Mard extends LiveForm {
     constructor(x, y) {
         super(x, y);
         this.multiply = 0;
@@ -36,28 +36,26 @@ module.exports = class Predator extends LiveForm {
             return found;
         }
         mul() {
-            predatorHashiv++
+            
             let emptyCells = this.chooseCell(0);
             let newCell = random(emptyCells);
     
             if (newCell) {
-    
+                mardHashiv++;
                 let x = newCell[0];
                 let y = newCell[1];
+                matrix[y][x] = 6;
+                let mard = new Mard(x, y);
+                mardArr.push(mard);
     
-    
-                matrix[y][x] = 3;
-    
-    
-                let predator = new Predator(x, y);
-                predatorArr.push(predator);
-    
-                this.life = 0;
+                this.life = 300;
             }
         }
         eat() {
             let emptyCells = this.chooseCell(2);
-            let newCell = random(emptyCells);
+            let emptyCells1 = this.chooseCell(1);
+            let emptyCells2 = this.chooseCell(3);
+            let newCell = random(emptyCells.concat(emptyCells1.concat(emptyCells2)));
     
             if (newCell) {
                 this.life++;
@@ -66,14 +64,14 @@ module.exports = class Predator extends LiveForm {
                 let y = newCell[1];
     
     
-                matrix[y][x] = 3;
+                matrix[y][x] = 6;
                 matrix[this.y][this.x] = 0;
     
     
                 this.y = y;
                 this.x = x;
     
-                if (this.life >= 20) {
+                if (this.life >= 100) {
                     this.mul();
                 }
             } else {
@@ -83,15 +81,14 @@ module.exports = class Predator extends LiveForm {
         move() {
             this.life--;
             let emptyCells = this.chooseCell(0);
-            let emptyCells1 = this.chooseCell(1);
-            let newCell = random(emptyCells.concat(emptyCells1));
+            let newCell = random(emptyCells);
     
             if (newCell) {
                 let x = newCell[0];
                 let y = newCell[1];
     
     
-                matrix[y][x] = 3;
+                matrix[y][x] = 6;
                 matrix[this.y][this.x] = 0;
     
                 this.y = y;
@@ -104,9 +101,9 @@ module.exports = class Predator extends LiveForm {
         die() {
             matrix[this.y][this.x] = 0;
     
-            for (let i in predatorArr) {
-                if (predatorArr[i].x == this.x && predatorArr[i].y == this.y) {
-                    predatorArr.splice(i, 1)
+            for (let i in mardArr) {
+                if (mardArr[i].x == this.x && mardArr[i].y == this.y) {
+                    mardArr.splice(i, 1)
                 }
             }
         }
